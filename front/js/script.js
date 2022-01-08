@@ -14,13 +14,13 @@ fetch("http://localhost:3000/api/products")
 
 // Ajout de chaque produit à la homepage via boucle
 function cartContent(products) {
-  for (var i = 0; i < products.length; i++) {
+  for (let i = 0; i < products.length; i++) {
 //Création des élèments HTML
-    var productLink = document.createElement("a");
-    var productCard = document.createElement("article");
-    var productImage = document.createElement("img");
-    var productName = document.createElement("h3");
-    var productDescription = document.createElement("p");
+    let productLink = document.createElement("a");
+    let productCard = document.createElement("article");
+    let productImage = document.createElement("img");
+    let productName = document.createElement("h3");
+    let productDescription = document.createElement("p");
 //Initialisation des noms 
     productLink.href = "./product.html?id=" + products[i]._id;
     productImage.src = products[i].imageUrl;
