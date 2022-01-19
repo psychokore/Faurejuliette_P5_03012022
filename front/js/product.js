@@ -31,6 +31,7 @@ const image = document.getElementsByClassName("item__img")[0];
 let picture = document.createElement("img");
 image.appendChild(picture);
 
+
 /**
  * Affichage des informations du produit
  * @param {Object} product 
@@ -41,6 +42,10 @@ function pageContent(product){
         description.textContent = product.description;
         picture.setAttribute("src", product.imageUrl);
         picture.setAttribute("alt", product.altTxt);
+        
+        let options = product.colors;
+        options.forEach(function(element,key){
+            colors[key] = new Option (element, key);
+        });
+        console.log(options)
 }
-
-
