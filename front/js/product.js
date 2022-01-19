@@ -28,6 +28,8 @@ const price = document.getElementById("price");
 const description = document.getElementById("description");
 const colors = document.getElementById("colors");
 const image = document.getElementsByClassName("item__img")[0];
+let picture = document.createElement("img");
+image.appendChild(picture);
 
 /**
  * Affichage des informations du produit
@@ -37,5 +39,8 @@ function pageContent(product){
         title.textContent = product.name;
         price.textContent = product.price;
         description.textContent = product.description;
+        picture.setAttribute("src", product.imageUrl);
+        picture.setAttribute("alt", product.altTxt);
 }
+
 
