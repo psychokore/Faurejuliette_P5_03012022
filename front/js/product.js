@@ -17,7 +17,11 @@ fetch(`http://localhost:3000/api/products/${url.get("id")}`)
         window.location.href = "http://localhost:5500/front/html/index.html" //redirection à la page d'acceuil si non existant  
     }
     pageContent(product)
-    //eventlistener pour le panier
+    //ajout au panier
+    document.getElementById("addToCart").addEventListener('click', function(){
+        addBasket(product);
+        alert('Votre article a été ajouté dans le panier');
+    });
 })
 .catch(error=>window.location.href = "http://localhost:5500/front/html/index.html");
 
@@ -33,7 +37,7 @@ image.appendChild(picture);
 
 
 /**
- * Affichage des informations du produit
+ * Affichage des informations du product
  * @param {Object} product 
  */
 function pageContent(product){
@@ -47,5 +51,7 @@ function pageContent(product){
         options.forEach(function(element,key){
             colors[key] = new Option (element, key);
         });
-        console.log(options)
 }
+
+
+

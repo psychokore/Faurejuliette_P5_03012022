@@ -11,28 +11,28 @@ function getBasket(){
     }
 }
 
-function addBasket(product){
+function addBasket(produit){
     let basket = getBasket();
-    let foundProduct = basket.find(p => p.id == product.id);
+    let foundProduct = basket.find(p => p.id == produit.id);
     if (foundProduct != undefined){
         foundProduct.quantity++;
     } else {
-        product.quantity = 1;
-        basket.push(product); 
+        produit.quantity = 1;
+        basket.push(produit); 
     }
     
     saveBasket(basket);
 }
 
-function removeFromBasket(product){
+function removeFromBasket(produit){
     let basket = getBasket();
-    basket = basket.filter(p => p.id != product.id);
+    basket = basket.filter(p => p.id != produit.id);
     saveBasket(basket);
 }
 
-function changeQuantity(product, quantity){
+function changeQuantity(produit, quantity){
     let basket = getBasket();
-    let foundProduct = basket.find(p => p.id == product.id);
+    let foundProduct = basket.find(p => p.id == produit.id);
     if (foundProduct != undefined){
         foundProduct.quantity += quantity;
         if (foundProduct.quantity <= 0){
@@ -46,8 +46,8 @@ function changeQuantity(product, quantity){
 function getNumberProduct(){
     let basket = getBasket();
     let number = 0;
-    for (let product of basket){
-        number += product.quantity;
+    for (let produit of basket){
+        number += produit.quantity;
     }
     return number;
 }
@@ -55,8 +55,8 @@ function getNumberProduct(){
 function getTotalPrice(){
     let basket = getBasket();
     let total = 0;
-    for (let product of basket){
-        total += product.quantity * product.price;
+    for (let produit of basket){
+        total += produit.quantity * produit.price;
     }
     return total;
 }
