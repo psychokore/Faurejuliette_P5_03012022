@@ -53,5 +53,25 @@ function pageContent(product){
         });
 }
 
+function addBasket(product){
 
+    let chosenQuantity = document.getElementById("quantity");
+    if (chosenQuantity.value == 0) {
+        alert ("Merci de sélectionner une quantité")
+        return;
+    }
+
+    let chosenColor = document.getElementById("colors");
+    if (!chosenColor.value){
+        alert ("Merci de sélectionner une couleur")
+        return;
+    }
+
+    let itemOrdered = {
+        id: product._id,
+        quantite: chosenQuantity.value,
+        couleur: chosenColor.value,
+    }
+    console.log(itemOrdered);
+}
 
