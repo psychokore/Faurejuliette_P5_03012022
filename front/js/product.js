@@ -48,8 +48,8 @@ function pageContent(product){
         picture.setAttribute("alt", product.altTxt);
         
         let options = product.colors;
-        options.forEach(function(element,key){
-            colors[key] = new Option (element, key);
+        options.forEach(function(element){
+            colors.appendChild(new Option (element, element));
         });
 }
 
@@ -69,9 +69,30 @@ function addBasket(product){
 
     let itemOrdered = {
         id: product._id,
-        quantite: chosenQuantity.value,
+        quantity: parseInt(chosenQuantity.value),
         couleur: chosenColor.value,
     }
-    console.log(itemOrdered);
+    
+    let basket = getBasket();
+    let foundProduct = basket.find(p => p.id == itemOrdered.id && p.couleur == itemOrdered.couleur);
+    if (foundProduct != undefined){
+        foundProduct.quantity += itemOrdered.quantity;
+    } else {
+        basket.push(itemOrdered);
+    }
+    saveBasket(basket);
 }
 
+function saveBasket(basket){
+    localStorage.setItem("basket", JSON.stringify(basket)); //transforme l'objet en chaîne de caractères
+}
+
+function getBasket(){
+    let basket=localStorage.getItem("basket");
+    if (basket == null){
+        return [];
+    } else {
+        return JSON.parse(basket); //transforme la chaîne en objet
+    }
+}
+console.log(getBasket())

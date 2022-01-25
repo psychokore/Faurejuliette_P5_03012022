@@ -11,18 +11,6 @@ function getBasket(){
     }
 }
 
-function addBasket(product){
-    let basket = getBasket();
-    let foundProduct = basket.find(p => p.id == product.id);
-    if (foundProduct != undefined){
-        foundProduct.quantity++;
-    } else {
-        product.quantity = 1;
-        basket.push(product); 
-    }
-    
-    saveBasket(basket);
-}
 
 function removeFromBasket(product){
     let basket = getBasket();
