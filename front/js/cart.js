@@ -9,7 +9,112 @@ function getBasket(){
     } else {
         return JSON.parse(basket); //transforme la chaîne en objet
     }
+    
 }
+
+
+console.log(getBasket());
+
+// Récupération des informations de l'API
+function infoResquest (){
+    let basket = getBasket();
+    fetch(`http://localhost:3000/api/products/${basket[i].id}`)
+    .then (function (res){
+        if (res.ok){
+            return res.json();
+        }
+    })
+    .then ((data) => productInfo(data))
+}
+
+
+function productInfo(data){
+    productName = data.name;
+    productPrice = data.price;
+    productImage.setAttribute("src", data.imageUrl);
+    productImage.setAttribute("atl", data.altTxt);
+}
+
+function basketContent (){
+    let basket = getBasket()
+    for (let i of basket){
+//Création des éléments HTML
+//Article
+        let productArticle = document.createElement("article");
+        document.getElementById("cart__items").appendChild(productArticle);
+        productArticle.className = "cart__item";
+
+//Div Image
+        let productImageDiv = document.createElement("div");
+        productArticle.appendChild(productImageDiv);
+        productImageDiv.className = "cart__item__img";
+
+//Image du produit
+        let productImage = document.createElement("img");
+        productImageDiv.appendChild(productImage);
+
+// Div informations produits
+        let itemContent = document.createElement("div");
+        productArticle.appendChild(itemContent);
+        itemContent.className = "cart__item__content";
+
+//Div description produit
+        let itemDescription = document.createElement("div");
+        itemContent.appendChild(itemDescription);
+        itemDescription.className = "cart__item__content__description";
+
+//Nom produit
+        let productName = document.createElement("h2");
+        itemDescription.appendChild(productName);
+
+//Couleur produit
+        let productColor = document.createElement("p");
+        itemDescription.appendChild(productColor);
+        productColor = basket[i].couleur;
+
+//Prix produit
+        let productPrice = document.createElement("p");
+        itemDescription.appendChild(productPrice);
+
+//Div setting
+        let itemSetting = document.createElement("div");
+        productArticle.appendChild(itemSetting);
+        itemSetting.className = ("cart__item__content__settings");
+
+//Setting quantité
+        let quantitySetting = document.createElement("div");
+        itemSetting.appendChild(quantitySetting);
+        quantitySetting.className = "cart__item__content__settings__quantity";
+
+// Texte quantité
+        let quantityText = document.createElement("p");
+        quantitySetting.appendChild(quantityText);
+
+//Input quantité
+        let selectQuantity = document.createElement("input");
+        quantitySetting.appendChild(selectQuantity);
+        selectQuantity.className = "itemQuantity";
+        selectQuantity.setAttribute("type", "number");
+        selectQuantity.setAttribute("min", "1");
+        selectQuantity.setAttribute("max", "100");
+        selectQuantity.setAttribute("name", "itemQuantity");
+        selectQuantity = basket[i].quantity;
+
+//Div delete
+        let deleteContent = document.createElement("div");
+        productArticle.appendChild(deleteContent);
+        deleteContent.className = "cart__item__content__settings__delete";
+
+//Delete Item
+        let deleteItem = document.createElement("p");
+        deleteContent.appendChild(deleteItem);
+        deleteItem.textContent = "Supprimer";
+        deleteItem.className = "deleteItem";
+    }
+}
+
+
+
 
 
 function removeFromBasket(product){
