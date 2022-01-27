@@ -75,6 +75,7 @@ function basketContent (){
 //Prix produit
         let productPrice = document.createElement("p");
         itemDescription.appendChild(productPrice);
+        
 
 //Div setting
         let itemSetting = document.createElement("div");
@@ -89,6 +90,7 @@ function basketContent (){
 // Texte quantité
         let quantityText = document.createElement("p");
         quantitySetting.appendChild(quantityText);
+        quantityText.textContent = "Qté : ";
 
 //Input quantité
         let selectQuantity = document.createElement("input");
