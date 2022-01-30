@@ -12,32 +12,29 @@ function getBasket(){
     
 }
 
-
+const products = []
 console.log(getBasket());
 
 // Récupération des informations de l'API
 function infoResquest (){
     let basket = getBasket();
+    for (let i = 0; i < basket.length; i++){
     fetch(`http://localhost:3000/api/products/${basket[i].id}`)
     .then (function (res){
         if (res.ok){
             return res.json();
         }
     })
-    .then ((data) => productInfo(data))
+    .then ((data) => basketContent({...basket[i], price: data.price, name: data.name, imageUrl: data.imageUrl, altTxt: data.altTxt}))
+}
 }
 
+infoResquest();
+//async await
 
-function productInfo(data){
-    productName = data.name;
-    productPrice = data.price;
-    productImage.setAttribute("src", data.imageUrl);
-    productImage.setAttribute("atl", data.altTxt);
-}
 
-function basketContent (){
-    let basket = getBasket()
-    for (let i of basket){
+function basketContent (product){
+    products.push(product);
 //Création des éléments HTML
 //Article
         let productArticle = document.createElement("article");
@@ -65,12 +62,15 @@ function basketContent (){
 
 //Nom produit
         let productName = document.createElement("h2");
+        productName.textContent = product.name;
         itemDescription.appendChild(productName);
+        
 
 //Couleur produit
         let productColor = document.createElement("p");
+        productColor.textContent = product.couleur;
         itemDescription.appendChild(productColor);
-        productColor = basket[i].couleur;
+        
 
 //Prix produit
         let productPrice = document.createElement("p");
@@ -94,13 +94,13 @@ function basketContent (){
 
 //Input quantité
         let selectQuantity = document.createElement("input");
-        quantitySetting.appendChild(selectQuantity);
         selectQuantity.className = "itemQuantity";
         selectQuantity.setAttribute("type", "number");
         selectQuantity.setAttribute("min", "1");
         selectQuantity.setAttribute("max", "100");
         selectQuantity.setAttribute("name", "itemQuantity");
-        selectQuantity = basket[i].quantity;
+        selectQuantity.value = product.quantity;
+        quantitySetting.appendChild(selectQuantity);
 
 //Div delete
         let deleteContent = document.createElement("div");
@@ -112,26 +112,30 @@ function basketContent (){
         deleteContent.appendChild(deleteItem);
         deleteItem.textContent = "Supprimer";
         deleteItem.className = "deleteItem";
-    }
 }
 
 
 
 
+//ajouter addeventlistener au clic sur supprimer
 
+//a appeler suite au clic
 function removeFromBasket(product){
     let basket = getBasket();
-    basket = basket.filter(p => p.id != product.id);
+    basket = basket.filter(p => p.id != product.id && p.couleur == product.couleur);
     saveBasket(basket);
 }
 
+
+//a appeler au changement de la valeur de quantité input ou change
 function changeQuantity(product, quantity){
     let basket = getBasket();
-    let foundProduct = basket.find(p => p.id == product.id);
+    let foundProduct = basket.find(p => p.id == product.id && p.couleur == product.couleur);
     if (foundProduct != undefined){
         foundProduct.quantity += quantity;
         if (foundProduct.quantity <= 0){
             removeFromBasket(foundProduct);
+            //actualiser l'interface
         } else {
            saveBasket(basket) 
         }
@@ -148,9 +152,8 @@ function getNumberProduct(){
 }
 
 function getTotalPrice(){
-    let basket = getBasket();
     let total = 0;
-    for (let product of basket){
+    for (let product of products){
         total += product.quantity * product.price;
     }
     return total;
