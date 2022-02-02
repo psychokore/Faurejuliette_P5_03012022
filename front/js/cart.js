@@ -49,6 +49,8 @@ function basketContent (product){
 //Image du produit
         let productImage = document.createElement("img");
         productImageDiv.appendChild(productImage);
+        productImage.setAttribute("src", product.imageUrl);
+        productImage.setAttribute("alt", product.altTxt);
 
 // Div informations produits
         let itemContent = document.createElement("div");
@@ -74,6 +76,7 @@ function basketContent (product){
 
 //Prix produit
         let productPrice = document.createElement("p");
+        productPrice.textContent = product.price + "€"; 
         itemDescription.appendChild(productPrice);
         
 
