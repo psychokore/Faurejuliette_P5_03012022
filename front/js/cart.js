@@ -119,9 +119,10 @@ function basketContent (product){
 }
 
 
-
-
 //ajouter addeventlistener au clic sur supprimer
+document.getElementsByClassName("deleteItem").addEventListener('click', function(){
+    removeFromBasket(product);
+});
 
 //a appeler suite au clic
 function removeFromBasket(product){
@@ -130,7 +131,9 @@ function removeFromBasket(product){
     saveBasket(basket);
 }
 
-
+document.getElementsByClassName("itemQuantity").addEventListener('change', function(){
+    changeQuantity(product);
+});
 //a appeler au changement de la valeur de quantité input ou change
 function changeQuantity(product, quantity){
     let basket = getBasket();
