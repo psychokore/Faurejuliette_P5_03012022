@@ -1,7 +1,9 @@
+//Sauvegarder du panier
 function saveBasket(basket){
     localStorage.setItem("basket", JSON.stringify(basket)); //transforme l'objet en chaîne de caractères
 }
 
+//Récupération du panier
 function getBasket(){
     let basket=localStorage.getItem("basket");
     if (basket == null){
@@ -13,7 +15,6 @@ function getBasket(){
 }
 
 const products = []
-console.log(getBasket());
 
 // Récupération des informations de l'API
 function infoResquest (){
@@ -146,18 +147,35 @@ function changeQuantity(product, quantity){
 }
 
 function getNumberProduct(){
-    let basket = getBasket();
-    let number = 0;
-    for (let product of basket){
-        number += product.quantity;
+    let totalQuantity = 0;
+    for (let product of products){
+        totalQuantity += product.quantity;
     }
-    return number;
+    return totalQuantity;   
 }
+
+
+let cartQuantity = document.getElementById("totalQuantiy");
+cartQuantity.textContent = totalQuantity;
+
 
 function getTotalPrice(){
     let total = 0;
+    //new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number)
     for (let product of products){
         total += product.quantity * product.price;
     }
     return total;
 }
+
+let totalPrice = document.getElementById("totalPrice");
+totalPrice.textContent = total;
+
+
+
+//Formulaire
+
+//regex email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+//regex nom/prénom: ^[a-zA-ZZàâäéèêëïîôöùûüÿç'-]+$
+//regex ville: ^[a-zA-ZZàâäéèêëïîôöùûüÿç'-]+$
+//regex adresse: [0-9]{1,4}[ ,-][ a-zA-Zàâäéèêëïîôöùûüÿç'-]+$
