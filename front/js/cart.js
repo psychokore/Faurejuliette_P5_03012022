@@ -155,7 +155,8 @@ function getNumberProduct(){
 }
 
 
-let cartQuantity = document.getElementById("totalQuantiy");
+let totalQuantity = getNumberProduct();
+let cartQuantity = document.getElementById("totalQuantity");
 cartQuantity.textContent = totalQuantity;
 
 
@@ -168,6 +169,7 @@ function getTotalPrice(){
     return total;
 }
 
+let total = getTotalPrice();
 let totalPrice = document.getElementById("totalPrice");
 totalPrice.textContent = total;
 
