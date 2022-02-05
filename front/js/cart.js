@@ -142,7 +142,7 @@ function changeQuantity(product, quantity){
         foundProduct.quantity += quantity;
         if (foundProduct.quantity <= 0){
             removeFromBasket(foundProduct);
-            //actualiser l'interface
+            location.reload();
         } else {
            saveBasket(basket) 
         }
@@ -180,7 +180,93 @@ totalPrice.textContent = total;
 
 //Formulaire
 
-//regex email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-//regex nom/prénom: ^[a-zA-ZZàâäéèêëïîôöùûüÿç'-]+$
-//regex ville: ^[a-zA-ZZàâäéèêëïîôöùûüÿç'-]+$
-//regex adresse: [0-9]{1,4}[ ,-][ a-zA-Zàâäéèêëïîôöùûüÿç'-]+$
+//Récupérer le formulaire
+let orderForm = document.querySelector('.cart__order__form');
+
+//Ecouter la modification du champ "prénom"
+orderForm.firstName.addEventListener('change', function() {
+    validFirstName(this);
+})
+//Vérifier le champ "prénom"
+function validFirstName(inputFirstName) {
+    let firstNameRegExp = new RegExp('^[A-Za-z éèëôîï-]+$', 'g');
+    let testFirstName = firstNameRegExp.test(inputFirstName.value);
+    if (testFirstName) {
+        document.querySelector('#firstNameErrorMsg').innerText = '';
+        return true;
+    } else {
+        document.querySelector('#firstNameErrorMsg').innerText = 'Veuillez saisir un prénom valide.';
+        return false;
+    }
+}
+
+//Ecouter la modification du champ "nom"
+orderForm.lastName.addEventListener('change', function() {
+    validLastName(this);
+})
+//Vérifier le champ "nom"
+function validLastName(inputLastName) {
+    let lastNameRegExp = new RegExp("^[A-Za-z éèëôîï'-]+$", "g");
+    let testLastName = lastNameRegExp.test(inputLastName.value);
+    if (testLastName) {
+        document.querySelector('#lastNameErrorMsg').innerText = '';
+        return true;
+    } else {
+        document.querySelector('#lastNameErrorMsg').innerText = 'Veuillez saisir un nom valide.';
+        return false;
+    }
+}
+
+//Ecouter la modification du champ "adresse"
+orderForm.address.addEventListener('change', function() {
+    validAddress(this);
+})
+//Vérifier le champ "adresse"
+function validAddress(inputAddress) {
+    let addressRegExp = new RegExp('[A-Za-zéèëôîï0-9\'\.\-\s\,]{5}', 'g');
+    let testAddress = addressRegExp.test(inputAddress.value);
+    if (testAddress) {
+        document.querySelector('#addressErrorMsg').innerText = '';
+        return true;
+    } else {
+        document.querySelector('#addressErrorMsg').innerText = 'Veuillez saisir une adresse valide.';
+        return false;
+    }
+}
+
+//Ecouter la modification du champ "ville"
+orderForm.city.addEventListener('change', function() {
+    validCity(this);
+})
+//Vérifier le champ "ville"
+function validCity(inputCity) {
+    let cityRegExp = new RegExp('[A-Za-zéèëôîï0-9\'\.\-\s\,]{2}', 'g');
+    let testCity = cityRegExp.test(inputCity.value);
+    if (testCity) {
+        document.querySelector('#cityErrorMsg').innerText = '';
+        return true;
+    } else {
+        document.querySelector('#cityErrorMsg').innerText = 'Veuillez saisir un nom de ville valide.';
+        return false;
+    }
+}
+
+//Ecouter la modification du champ "email"
+orderForm.email.addEventListener('change', function() {
+    validEmail(this);
+})
+//Vérifier le champ "email"
+function validEmail(inputEmail) {
+    let emailRegExp = new RegExp(
+        '^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.+-]+[.]{1}[a-z]{2,10}$', 'g'
+    );
+    let testEmail = emailRegExp.test(inputEmail.value);
+    if (testEmail) {
+        document.querySelector('#emailErrorMsg').innerText = '';
+        return true;
+    } else {
+        document.querySelector('#emailErrorMsg').innerText = 'Veuillez saisir un email valide.';
+        return false;
+    }
+}
+
