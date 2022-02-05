@@ -268,3 +268,53 @@ function validEmail(inputEmail) {
     }
 }
 
+//Ecouter la soumission du formulaire
+orderForm.addEventListener('submit', function(event) {
+    event.preventDefault(); //empêche le comportement par défaut du formulaire
+
+    //Récupérer les données saisies dans le formulaire
+    const contact = {
+        firstName : document.querySelector('#firstName').value,
+        lastName : document.querySelector('#lastName').value,
+        address : document.querySelector('#address').value,
+        city : document.querySelector('#city').value,
+        email : document.querySelector('#email').value
+    };
+
+    //Si tous les champs sont correctement remplis
+    if (validFirstName(orderForm.firstName) 
+            && validLastName(orderForm.lastName) 
+            && validAddress(orderForm.address) 
+            && validCity(orderForm.city) 
+            && validEmail(orderForm.email)) {
+
+        //Inclure les données du formulaire et les ID-produit du panier dans une seule variable
+        const toSendToApi = {
+        products,
+        contact
+        };
+        console.log(toSendToApi);
+
+        //Envoi de l'objet toSendToApi vers le serveur
+        let url = 'http://localhost:3000/api/products/order';
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(toSendToApi),
+            headers: {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json",
+            }
+        }).then(function(res) {
+            if (res.ok) {
+                return res.json();
+            }
+        }).then(function(data) {
+            //Vider le panier
+            localStorage.clear();
+            //Rediriger vers la page de confirmation
+            location.replace(`./confirmation.html?id=${data.orderId}`);
+        }).catch(function(err) {
+            console.log('Une erreur est survenue : ' + err);
+        })
+    }
+})
