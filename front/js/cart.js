@@ -126,8 +126,7 @@ document.getElementsByClassName("deleteItem").addEventListener('click', function
 
 //a appeler suite au clic
 function removeFromBasket(product){
-    let basket = getBasket();
-    basket = basket.filter(p => p.id != product.id && p.couleur == product.couleur);
+    products = products.filter(p => p.id != product.id && p.couleur == product.couleur);
     saveBasket(basket);
 }
 
@@ -136,8 +135,7 @@ document.getElementsByClassName("itemQuantity").addEventListener('change', funct
 });
 //a appeler au changement de la valeur de quantité input ou change
 function changeQuantity(product, quantity){
-    let basket = getBasket();
-    let foundProduct = basket.find(p => p.id == product.id && p.couleur == product.couleur);
+    let foundProduct = products.find(p => p.id == product.id && p.couleur == product.couleur);
     if (foundProduct != undefined){
         foundProduct.quantity += quantity;
         if (foundProduct.quantity <= 0){
