@@ -190,10 +190,10 @@ function validFirstName(inputFirstName) {
     let firstNameRegExp = new RegExp('^[A-Za-z éèëôîï-]+$', 'g');
     let testFirstName = firstNameRegExp.test(inputFirstName.value);
     if (testFirstName) {
-        document.querySelector('#firstNameErrorMsg').innerText = '';
+        document.querySelector('#firstNameErrorMsg').textContent = '';
         return true;
     } else {
-        document.querySelector('#firstNameErrorMsg').innerText = 'Veuillez saisir un prénom valide.';
+        document.querySelector('#firstNameErrorMsg').textContent = 'Veuillez saisir un prénom valide.';
         return false;
     }
 }
@@ -207,10 +207,10 @@ function validLastName(inputLastName) {
     let lastNameRegExp = new RegExp("^[A-Za-z éèëôîï'-]+$", "g");
     let testLastName = lastNameRegExp.test(inputLastName.value);
     if (testLastName) {
-        document.querySelector('#lastNameErrorMsg').innerText = '';
+        document.querySelector('#lastNameErrorMsg').textContent = '';
         return true;
     } else {
-        document.querySelector('#lastNameErrorMsg').innerText = 'Veuillez saisir un nom valide.';
+        document.querySelector('#lastNameErrorMsg').textContent = 'Veuillez saisir un nom valide.';
         return false;
     }
 }
@@ -224,10 +224,10 @@ function validAddress(inputAddress) {
     let addressRegExp = new RegExp('[A-Za-zéèëôîï0-9\'\.\-\s\,]{5}', 'g');
     let testAddress = addressRegExp.test(inputAddress.value);
     if (testAddress) {
-        document.querySelector('#addressErrorMsg').innerText = '';
+        document.querySelector('#addressErrorMsg').textContent = '';
         return true;
     } else {
-        document.querySelector('#addressErrorMsg').innerText = 'Veuillez saisir une adresse valide.';
+        document.querySelector('#addressErrorMsg').textContent = 'Veuillez saisir une adresse valide.';
         return false;
     }
 }
@@ -241,10 +241,10 @@ function validCity(inputCity) {
     let cityRegExp = new RegExp('[A-Za-zéèëôîï0-9\'\.\-\s\,]{2}', 'g');
     let testCity = cityRegExp.test(inputCity.value);
     if (testCity) {
-        document.querySelector('#cityErrorMsg').innerText = '';
+        document.querySelector('#cityErrorMsg').textContent = '';
         return true;
     } else {
-        document.querySelector('#cityErrorMsg').innerText = 'Veuillez saisir un nom de ville valide.';
+        document.querySelector('#cityErrorMsg').textContent = 'Veuillez saisir un nom de ville valide.';
         return false;
     }
 }
@@ -260,10 +260,10 @@ function validEmail(inputEmail) {
     );
     let testEmail = emailRegExp.test(inputEmail.value);
     if (testEmail) {
-        document.querySelector('#emailErrorMsg').innerText = '';
+        document.querySelector('#emailErrorMsg').textContent = '';
         return true;
     } else {
-        document.querySelector('#emailErrorMsg').innerText = 'Veuillez saisir un email valide.';
+        document.querySelector('#emailErrorMsg').textContent = 'Veuillez saisir un email valide.';
         return false;
     }
 }
