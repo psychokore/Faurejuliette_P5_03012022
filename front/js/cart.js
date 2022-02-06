@@ -14,7 +14,7 @@ function getBasket(){
     
 }
 
-const products = []
+let products = []
 
 // Récupération des informations de l'API
 function infoResquest (){
@@ -27,6 +27,10 @@ function infoResquest (){
         }
     })
     .then ((data) => basketContent({...basket[i], price: data.price, name: data.name, imageUrl: data.imageUrl, altTxt: data.altTxt}))
+    .finally(()=>{
+        updateNumberOfProductsAndPrice();
+    }
+    )
 }
 }
 
@@ -105,6 +109,10 @@ function basketContent (product){
         selectQuantity.setAttribute("name", "itemQuantity");
         selectQuantity.value = product.quantity;
         quantitySetting.appendChild(selectQuantity);
+        selectQuantity.addEventListener('change', function(){
+            changeQuantity(product, parseInt(selectQuantity.value), productArticle);
+            updateNumberOfProductsAndPrice();
+        });
 
 //Div delete
         let deleteContent = document.createElement("div");
@@ -116,33 +124,31 @@ function basketContent (product){
         deleteContent.appendChild(deleteItem);
         deleteItem.textContent = "Supprimer";
         deleteItem.className = "deleteItem";
+        deleteContent.addEventListener('click', function(){
+            removeFromBasket(product);
+            productArticle.remove();
+            updateNumberOfProductsAndPrice();
+        });
 }
 
 
-//ajouter addeventlistener au clic sur supprimer
-document.getElementsByClassName("deleteItem").addEventListener('click', function(){
-    removeFromBasket(product);
-});
 
-//a appeler suite au clic
 function removeFromBasket(product){
-    products = products.filter(p => p.id != product.id && p.couleur == product.couleur);
-    saveBasket(basket);
+    products = products.filter(p => p.id != product.id && p.couleur != product.couleur);
+    saveBasket(products);
+
 }
 
-document.getElementsByClassName("itemQuantity").addEventListener('change', function(){
-    changeQuantity(product);
-});
-//a appeler au changement de la valeur de quantité input ou change
-function changeQuantity(product, quantity){
+
+function changeQuantity(product, quantity, productArticle){
     let foundProduct = products.find(p => p.id == product.id && p.couleur == product.couleur);
     if (foundProduct != undefined){
-        foundProduct.quantity += quantity;
+        foundProduct.quantity = quantity;
         if (foundProduct.quantity <= 0){
             removeFromBasket(foundProduct);
-            location.reload();
+            productArticle.remove();
         } else {
-           saveBasket(basket) 
+           saveBasket(products) 
         }
     } 
 }
@@ -155,26 +161,26 @@ function getNumberProduct(){
     return totalQuantity;   
 }
 
-
-let totalQuantity = getNumberProduct();
-let cartQuantity = document.getElementById("totalQuantity");
-cartQuantity.textContent = totalQuantity;
-
-
 function getTotalPrice(){
     let total = 0;
-    //new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number)
     for (let product of products){
         total += product.quantity * product.price;
     }
     return total;
 }
 
-let total = getTotalPrice();
-let totalPrice = document.getElementById("totalPrice");
-totalPrice.textContent = total;
 
+function updateNumberOfProductsAndPrice (){
+    let totalQuantity = getNumberProduct();
+    let cartQuantity = document.getElementById("totalQuantity");
+    cartQuantity.textContent = totalQuantity;
 
+    let total = getTotalPrice();
+    let totalPrice = document.getElementById("totalPrice");
+    totalPrice.textContent = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(total);
+}
+
+updateNumberOfProductsAndPrice();
 
 //Formulaire
 
