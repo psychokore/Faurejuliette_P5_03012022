@@ -20,7 +20,6 @@ fetch(`http://localhost:3000/api/products/${url.get("id")}`)
     //ajout au panier
     document.getElementById("addToCart").addEventListener('click', function(){
         addBasket(product);
-        alert('Votre article a été ajouté dans le panier');
     });
 })
 .catch(error=>window.location.href = "http://localhost:5500/front/html/index.html");
@@ -81,6 +80,7 @@ function addBasket(product){
         basket.push(itemOrdered);
     }
     saveBasket(basket);
+    alert('Votre article a été ajouté dans le panier');
 }
 
 function saveBasket(basket){

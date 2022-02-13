@@ -296,13 +296,14 @@ orderForm.addEventListener('submit', function(event) {
 
         //Inclure les données du formulaire et les ID-produit du panier dans une seule variable
         const toSendToApi = {
-        products,
+        products: products.map(product => product.id),
         contact
         };
         console.log(toSendToApi);
 
         //Envoi de l'objet toSendToApi vers le serveur
         let url = 'http://localhost:3000/api/products/order';
+        console.log(toSendToApi);
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(toSendToApi),
@@ -315,12 +316,16 @@ orderForm.addEventListener('submit', function(event) {
                 return res.json();
             }
         }).then(function(data) {
+            if (data){
             //Vider le panier
+            console.log(data)
             localStorage.clear();
             //Rediriger vers la page de confirmation
-            location.replace(`./confirmation.html?id=${data.orderId}`);
+            location.replace(`./confirmation.html?id=${data.orderId}`);    
+            }
+            
         }).catch(function(err) {
-            console.log('Une erreur est survenue : ' + err);
+            console.log('Une erreur est survenue');
         })
     }
 })
